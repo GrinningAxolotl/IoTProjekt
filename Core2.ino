@@ -6,10 +6,10 @@ void core2Task(void * parameter){
     Serial.println("Task 2 changing values");
     gettimeofday(&timestamp,0);
     
-    //readSDS011();
-    //readDHT();
-    //bmpRead();
-    //ccsRead(); 
+    readSDS011();
+    readDHT();
+    bmpRead();
+    ccsRead(); 
     SensorValues.vTime = timestamp.tv_sec;
     
     xSemaphoreGive( xMutex );
