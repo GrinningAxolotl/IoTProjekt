@@ -38,6 +38,7 @@ void bmpRead() {
         Serial.println("Could not find a valid BMP280 sensor, check wiring!");
         delay(5000);
       }
+      connectedBMP=true;
     }
     else{    
     Serial.print("Temperature = ");

@@ -26,11 +26,11 @@ void core1Task(void * parameter){
     xSemaphoreTake( xMutex, portMAX_DELAY );
 
     //send temperature to SQL database
-    /*if (connectSQL())
+    if (connectSQL())
     {
       sendTemptoSql();
     }
-    */
+    
     //Get Sensordata to Send via WLAN
     Serial.print("Druck:");
     Serial.println(SensorValues.vPressure);
@@ -39,7 +39,7 @@ void core1Task(void * parameter){
     Serial.print("Feinstaub25:");
     Serial.println(SensorValues.vFineDust25);
     Serial.print("Temperatur:");
-    Serial.println(SensorValues.vTemp);
+    Serial.println(SensorValues.vTempBMP);
     Serial.print("Luftfeuchtigkeit:");
     Serial.println(SensorValues.vHydro);
     Serial.print("CO2:");

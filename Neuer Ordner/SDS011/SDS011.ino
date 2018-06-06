@@ -109,17 +109,19 @@ void readSDS() {
 
   delay(1000);
   wakeupSDS();
-  delay(10000);
+  //delay(10000);
   readSDS011();
   sleepSDS();
   Serial.print("Feinstaub10:");
   Serial.println(vFineDust10);
   Serial.print("Feinstaub25:");
   Serial.println(vFineDust25);
-  
-  bmpRead();
-  ccsRead();
 }
 
+void loop() {
+  readSDS();
+  bmpRead();
+  ccsRead();    
+}
 
 

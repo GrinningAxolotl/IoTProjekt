@@ -20,10 +20,10 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BMP280.h>
 
-#define BMP_SCK 13
+/*#define BMP_SCK 13
 #define BMP_MISO 12
 #define BMP_MOSI 11 
-#define BMP_CS 10
+#define BMP_CS 10*/
 
 Adafruit_BMP280 bme; // I2C
 //Adafruit_BMP280 bme(BMP_CS); // hardware SPI
@@ -38,17 +38,13 @@ void bmpRead() {
         Serial.println("Could not find a valid BMP280 sensor, check wiring!");
         delay(5000);
       }
+      connectedBMP = true;
     }
     else{    
-    Serial.print("Temperature = ");
-    Serial.print(bme.readTemperature());
-    Serial.println(" *C");
-    
+
+    SensorValues.vTempBMP = bme.readTemperature();
     SensorValues.vPressure = bme.readPressure();
-    
-    Serial.print("Approx altitude = ");
-    Serial.print(bme.readAltitude(1013.25)); // this should be adjusted to your local forcase
-    Serial.println(" m");
+    SensorValues.vAltitude = bme.readAltitude(1013.25); // this should be adjusted to your local forcase
     
     Serial.println();
     delay(2000);

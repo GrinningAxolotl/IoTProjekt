@@ -11,6 +11,10 @@
 #define uS_TO_S_FACTOR 1000000  /* Conversion factor for micro seconds to seconds */
 #define TIME_TO_SLEEP 20 /* Time ESP32 will go to sleep (in seconds) */
 
+#define DHT_PIN 17
+#define SDS011_RX 12
+#define SDS011_TX 13
+
 TaskHandle_t xTask1;
 TaskHandle_t xTask2;
 SemaphoreHandle_t xMutex;
@@ -25,10 +29,12 @@ typedef struct SensorData {
   int vPressure = 0;
   float vFineDust25 = 0;
   float vFineDust10 = 0;
-  float vTemp = 0;
+  float vTempDHT = 0;
+  float vTempBMP = 0;
   float vHydro = 0;
   uint16_t vCO2 = 0;
   uint16_t vTVOC = 0;
+  uint16_t vAltitude =0;
   unsigned long vTime =0;
 } SensorData;
 
@@ -37,9 +43,9 @@ time_t t;
 
 void setup() {
   Serial.begin(115200);
-  Serial2.begin(9600,SERIAL_8N1, 12, 13); 
-  //dht.setup(17);
-  //setTime(t);
+  Serial2.begin(9600,SERIAL_8N1, SDS011_RX, SDS011_TX); 
+  startDHT(DHT_PIN);
+  
   xMutex = xSemaphoreCreateMutex();
 
   

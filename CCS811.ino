@@ -55,6 +55,7 @@ void ccsRead()
         Serial.println("CCS811 not found, check wiring");
         delay(5000);
       }
+      connectedCCS = true;
     }
   else{
     //Check to see if data is ready with .dataAvailable()
@@ -66,6 +67,7 @@ void ccsRead()
       
       SensorValues.vCO2 = mySensor.getCO2(); 
       SensorValues.vTVOC = mySensor.getTVOC();
+      
     }
   }
 
