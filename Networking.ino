@@ -3,12 +3,12 @@
 //------------------------WLAN / TCP-----------------
 
 //Wifi Verbindung aufbauen HOME
-//const char* ssid = "AndroidCS2";
-//const char* pass =  "!5T7m577";
+const char* ssid = "AndroidCS";
+const char* pass =  "5T7m577de";
 
 //Wifi Verbindung aufbauen FH
-const char* ssid = "FH-Kiel-IoT-NAT";
-const char* pass =  "!FH-NAT-001!";
+//const char* ssid = "FH-Kiel-IoT-NAT";
+//const char* pass =  "!FH-NAT-001!";
 
 
 
@@ -83,5 +83,6 @@ bool connectToNetwork() {
     return(false);
   }
 }
+
 
 

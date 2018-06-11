@@ -4,21 +4,26 @@
 //IPAddress server_addr(192,168,43,126); // IP of the MySQL *server* here
 
 //Wifi Verbindung aufbauen FH
-IPAddress server_addr(192,168,100,130);
+IPAddress server_addr(192,168,178,36);
 char user[] = "esp32";              // MySQL user login username
 char password[] = "47uWrF267aV";        // MySQL user login password
 
 // Sample query
 char INSERT_DATA_DHT[] = "INSERT INTO weather_station.dht22 (sender_id, temp, humidity) VALUES ('%s','%s','%s')";
-char INSERT_DATA_CCS[] = "INSERT INTO weather_station.cc811 (sender_id, CO2, TVOC) VALUES ('%s','%s','%s')";
+char INSERT_DATA_CCS[] = "INSERT INTO weather_station.ccs811 (sender_id, CO2, TVOC) VALUES ('%s','%s','%s')";
 char INSERT_DATA_BMP[] = "INSERT INTO weather_station.bmp280 (sender_id, temp, pressure) VALUES ('%s','%s','%s')";
 char INSERT_DATA_SDS[] = "INSERT INTO weather_station.sds011 (sender_id, PM10, PM25) VALUES ('%s','%s','%s')";
 char query[128];
 char tempDHT[10];
+char tempBMP[10];
+
 char humidity[10];
-char co2[10], tvoc[10];
-char tempBMP[10], pressure[10];
-char fdust10[10], fdust25[10];
+char co2[10];
+char tvoc[10];
+
+char pressure[10];
+char fdust10[10]; 
+char fdust25[10];
 char macAdr[13];
 
 bool connectSQL(){
@@ -69,17 +74,17 @@ if (conn.connect(server_addr, 3306, user, password)) {
     
     sprintf(query, INSERT_DATA_DHT, macAdr, tempDHT, humidity);
     cur_mem->execute(query);
-    delete cur_mem;
+
     sprintf(query, INSERT_DATA_BMP, macAdr, tempBMP, pressure);
     cur_mem->execute(query);
-    delete cur_mem;
+
     sprintf(query, INSERT_DATA_SDS, macAdr, fdust10, fdust25);
     cur_mem->execute(query);
-    delete cur_mem;
+
     sprintf(query, INSERT_DATA_CCS, macAdr, co2, tvoc);
     cur_mem->execute(query);
     // Note: since there are no results, we do not need to read any data
-    // Deleting the cursor also frees up memory used
+    // Deleting the cursor also frees up memory used  
     delete cur_mem;
     Serial.println("Sensor Data recorded.");
    }
@@ -87,4 +92,5 @@ if (conn.connect(server_addr, 3306, user, password)) {
       Serial.println("Connection failed.");
     conn.close();
 }
+
 

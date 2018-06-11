@@ -11,7 +11,7 @@
 #define uS_TO_S_FACTOR 1000000  /* Conversion factor for micro seconds to seconds */
 #define TIME_TO_SLEEP 20 /* Time ESP32 will go to sleep (in seconds) */
 
-#define DHT_PIN 17
+#define DHT_PIN 32
 #define SDS011_RX 12
 #define SDS011_TX 13
 
@@ -71,3 +71,4 @@ void setup() {
 
 void loop() {
 }
+
