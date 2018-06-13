@@ -52,7 +52,9 @@ void ccsRead()
 { 
   if(connectedCCS == false){
     while (mySensor.begin() != CCS811Core::SENSOR_SUCCESS){
+        #if serialDebug == true
         Serial.println("CCS811 not found, check wiring");
+        #endif
         delay(5000);
       }
       connectedCCS = true;

@@ -34,8 +34,10 @@ bool connectedBMP = false;
 
 void bmpRead() {
     if(connectedBMP == false){
-      while(!bme.begin()) {  
+      while(!bme.begin()) {
+        #if serialDebug == true
         Serial.println("Could not find a valid BMP280 sensor, check wiring!");
+        #endif
         delay(5000);
       }
       connectedBMP = true;
@@ -46,7 +48,6 @@ void bmpRead() {
     SensorValues.vPressure = bme.readPressure();
     SensorValues.vAltitude = bme.readAltitude(1013.25); // this should be adjusted to your local forcase
     
-    Serial.println();
     delay(2000);
     }
 }

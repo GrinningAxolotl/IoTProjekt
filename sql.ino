@@ -4,7 +4,7 @@
 //IPAddress server_addr(192,168,43,126); // IP of the MySQL *server* here
 
 //Wifi Verbindung aufbauen FH
-IPAddress server_addr(192,168,178,36);
+IPAddress server_addr(192,168,100,199);
 char user[] = "esp32";              // MySQL user login username
 char password[] = "47uWrF267aV";        // MySQL user login password
 
@@ -28,13 +28,19 @@ char macAdr[13];
 
 bool connectSQL(){
   //delay(5000);
+  #if serialDebug == true
   Serial.print("Connecting to SQL... ");
+  #endif
   if (conn.connect(server_addr, 3306, user, password)){
+    #if serialDebug == true
     Serial.println("OK.");
+    #endif
     return 1;
   }
   else{
+    #if serialDebug == true
     Serial.println("FAILED.");
+    #endif
     return 0;
   }
 
@@ -51,7 +57,9 @@ void saveMacforSQLConnection(){
     WiFi.macAddress(mac);
     //Serial.print("MAC Adress char Array: ");
     //Serial.printf("%X : %X : %X : %X : %X : %X \n",mac[0], mac[1], mac[2],mac[3], mac[4], mac[5]);
+    #if serialDebug == true
     sprintf(macAdr, "%X%X%X%X%X%X", mac[0],mac[1],mac[2],mac[3],mac[4],mac[5]);
+    #endif
     //Serial.printf("MAC Adresse String: %s", macAdr);
 }
 
@@ -71,25 +79,34 @@ if (conn.connect(server_addr, 3306, user, password)) {
     dtostrf(SensorValues.vFineDust10, 1, 1, fdust10);
     dtostrf(SensorValues.vCO2, 1, 1, co2);
     dtostrf(SensorValues.vTVOC, 1, 1, tvoc);
-    
+    #if serialDebug == true
     sprintf(query, INSERT_DATA_DHT, macAdr, tempDHT, humidity);
+    #endif
     cur_mem->execute(query);
-
+    #if serialDebug == true
     sprintf(query, INSERT_DATA_BMP, macAdr, tempBMP, pressure);
+    #endif
     cur_mem->execute(query);
-
+    #if serialDebug == true
     sprintf(query, INSERT_DATA_SDS, macAdr, fdust10, fdust25);
+    #endif
     cur_mem->execute(query);
-
+    #if serialDebug == true
     sprintf(query, INSERT_DATA_CCS, macAdr, co2, tvoc);
+    #endif
     cur_mem->execute(query);
     // Note: since there are no results, we do not need to read any data
     // Deleting the cursor also frees up memory used  
     delete cur_mem;
+    #if serialDebug == true
     Serial.println("Sensor Data recorded.");
+    #endif
    }
-    else
+    else{
+      #if serialDebug == true
       Serial.println("Connection failed.");
+      #endif
+    }
     conn.close();
 }
 

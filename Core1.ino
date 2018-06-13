@@ -15,8 +15,10 @@ void core1Task(void * parameter){
     connectedToNetwork = connectToNetwork();
     if(connectedToNetwork == CONN_ESTABLISHED ){
       startUDPService();
+      #if serialDebug == true
       Serial.println(WiFi.macAddress());
       Serial.println(WiFi.localIP());
+      #endif
       SensorValues.vTime = getTimeStamp();
       saveMacforSQLConnection();
 
@@ -30,7 +32,7 @@ void core1Task(void * parameter){
     {
       sendTemptoSql();
     }
-    
+    #if serialDebug == true
     //Get Sensordata to Send via WLAN
     Serial.print("Druck:");
     Serial.println(SensorValues.vPressure);
@@ -48,11 +50,11 @@ void core1Task(void * parameter){
     Serial.println(SensorValues.vTVOC);
     Serial.print("Timestamp:");
     Serial.println(SensorValues.vTime);
-    
+    #endif
     xSemaphoreGive( xMutex );
-    
+    #if serialDebug == true
     Serial.println("Going to sleep now");
-    
+    #endif
     esp_deep_sleep_start();
     }
   }

@@ -3,12 +3,12 @@
 //------------------------WLAN / TCP-----------------
 
 //Wifi Verbindung aufbauen HOME
-const char* ssid = "AndroidCS";
-const char* pass =  "5T7m577de";
+//const char* ssid = "AndroidCS";
+//const char* pass =  "5T7m577de";
 
 //Wifi Verbindung aufbauen FH
-//const char* ssid = "FH-Kiel-IoT-NAT";
-//const char* pass =  "!FH-NAT-001!";
+const char* ssid = "FH-Kiel-IoT-NAT";
+const char* pass =  "!FH-NAT-001!";
 
 
 
@@ -33,12 +33,13 @@ String translateEncryptionType(wifi_auth_mode_t encryptionType) {
 void scanNetworksTest() {
 
   int numberOfNetworks = WiFi.scanNetworks();
-
+  #if serialDebug == true
   Serial.print("Number of networks found: ");
   Serial.println(numberOfNetworks);
+  #endif
 
   for (int i = 0; i < numberOfNetworks; i++) {
-
+    #if serialDebug == true
     Serial.print("Network name: ");
     Serial.println(WiFi.SSID(i));
 
@@ -49,9 +50,12 @@ void scanNetworksTest() {
     Serial.println(WiFi.BSSIDstr(i));
 
     Serial.print("Encryption type: ");
+    #endif
     String encryptionTypeDescription = translateEncryptionType(WiFi.encryptionType(i));
+    #if serialDebug == true
     Serial.println(encryptionTypeDescription);
     Serial.println("-----------------------");
+    #endif
 
   }
 }

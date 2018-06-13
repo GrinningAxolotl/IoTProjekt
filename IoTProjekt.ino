@@ -8,6 +8,8 @@
 #include <MySQL_Connection.h>
 #include <MySQL_Cursor.h>
 
+#define serialDebug false
+
 #define uS_TO_S_FACTOR 1000000  /* Conversion factor for micro seconds to seconds */
 #define TIME_TO_SLEEP 20 /* Time ESP32 will go to sleep (in seconds) */
 
@@ -42,7 +44,9 @@ RTC_DATA_ATTR SensorData SensorValues;
 time_t t;
 
 void setup() {
+  #if serialDebug == true
   Serial.begin(115200);
+  #endif
   Serial2.begin(9600,SERIAL_8N1, SDS011_RX, SDS011_TX); 
   startDHT(DHT_PIN);
   
